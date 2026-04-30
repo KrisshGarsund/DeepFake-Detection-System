@@ -10,4 +10,5 @@ data/
 
 __pycache__/
 *.pyc
-.vscode/*.exe
+.vscode/
+*.exe
