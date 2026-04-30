@@ -1,0 +1,13 @@
+data/
+*.zip
+*.rar
+*.csv
+*.wav
+*.mp3
+*.mp4
+*.jpg
+*.png
+
+__pycache__/
+*.pyc
+.vscode/*.exe

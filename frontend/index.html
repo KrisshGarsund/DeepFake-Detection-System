@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepfakeGuard — AI Media Authenticator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-visuals">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Deepfake<span style="color:white">Guard</span></span>
+        </div>
+        <div class="nav-links">
+            <div class="nav-link active" data-section="home">Home</div>
+            <div class="nav-link" data-section="how-it-works">How It Works</div>
+            <div class="nav-link" data-section="about">About Project</div>
+            <div class="nav-link" data-section="detect">Detect</div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Secure Your <br><span class="gradient-text">Digital Reality</span> With AI</h1>
+                    <p class="hero-subtitle">State-of-the-art multimodal deepfake detection. We analyze images, audio, and video to ensure your media is authentic.</p>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn primary-btn nav-trigger" data-section="detect">Start Detection <i class="fa-solid fa-arrow-right"></i></button>
+                        <button class="btn outline-btn nav-trigger" data-section="about">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="glass-sphere"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detect Section -->
+        <section id="detect" class="section">
+            <div class="detect-tabs">
+                <button class="tab-trigger active" data-modality="image"><i class="fa-solid fa-image"></i> Image</button>
+                <button class="tab-trigger" data-modality="video"><i class="fa-solid fa-video"></i> Video</button>
+                <button class="tab-trigger" data-modality="audio"><i class="fa-solid fa-microphone"></i> Audio</button>
+            </div>
+
+            <div class="glass-panel" id="upload-panel">
+                <div class="upload-card" id="drop-area">
+                    <input type="file" id="file-input" hidden>
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <h3 id="upload-instruction">Drop your <span id="modality-text">image</span> here</h3>
+                    <p>or click to browse from device</p>
+                    <button class="btn primary-btn" id="browse-btn" style="margin-top: 1.5rem;">Select File</button>
+                </div>
+
+                <!-- Preview State -->
+                <div id="preview-section" class="hidden" style="text-align: center;">
+                    <div id="media-preview" style="max-width: 600px; margin: 0 auto 2rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--panel-border);"></div>
+                    <div style="display: flex; justify-content: center; gap: 1rem;">
+                        <button id="cancel-btn" class="btn outline-btn">Cancel</button>
+                        <button id="analyze-btn" class="btn primary-btn">Run Analysis <i class="fa-solid fa-microchip"></i></button>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loader" class="hidden" style="text-align: center; padding: 4rem 0;">
+                    <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--accent-glow); margin-bottom: 1.5rem;"></i>
+                    <h3>Neural networks are processing...</h3>
+                    <p style="color: var(--text-secondary);">Verifying pixel authenticity and temporal consistency.</p>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div id="results" class="hidden" style="margin-top: 2rem;">
+                <div class="glass-panel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+                    <div class="gauge-container">
+                        <span id="modality-badge" class="badge" style="background: rgba(255,140,0,0.1); color: var(--accent-glow); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(255,140,0,0.2); margin-bottom: 1.5rem; display: inline-block;">IMAGE</span>
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="gauge-fill" class="circle green" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <text x="18" y="20.35" id="confidence-text" class="percentage">0%</text>
+                        </svg>
+                        <div style="text-align: center;">
+                            <h2 id="final-verdict" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Authentic</h2>
+                            <p id="verdict-desc" style="color: var(--text-secondary);">Safe for consumption.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">Model Insights</h3>
+                        <ul id="insights-list" style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
+                            <!-- Populated by JS -->
+                        </ul>
+                        <button id="reset-btn" class="btn outline-btn" style="margin-top: 2.5rem; width: 100%;">Analyze Another</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="section">
+            <div class="glass-panel">
+                <h2 class="hero-title" style="font-size: 2.5rem; text-align: center;">How It Works</h2>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Upload Media</h3>
+                        <p>Securely upload your image, video, or audio file to our encrypted analysis pipeline.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Feature Extraction</h3>
+                        <p>Our algorithms isolate key biological and digital markers (facial geometry, vocal frequencies).</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Neural Analysis</h3>
+                        <p>Multiple neural networks (MobileNetV2, CNN) cross-reference the data against known manipulation patterns.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3>Final Verdict</h3>
+                        <p>Receive a comprehensive report with a confidence score and detailed forensics insights.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="glass-panel">
+                <h2 class="hero-title" style="font-size: 2.5rem;">About The Project</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">DeepfakeGuard is a cutting-edge safety initiative developed to combat the rise of synthetic media and misinformation.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div class="glass-panel" style="padding: 1.5rem; background: rgba(255,255,255,0.02);">
+                        <i class="fa-solid fa-image" style="font-size: 2rem; color: var(--accent-glow); margin-bottom: 1rem;"></i>
+                        <h3>Vision Detection</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Using MobileNetV2 architecture, we identify inconsistencies in facial features and skin textures.</p>
+                    </div>
+                    <div class="glass-panel" style="padding: 1.5rem; background: rgba(255,255,255,0.02);">
+                        <i class="fa-solid fa-microphone" style="font-size: 2rem; color: var(--accent-glow); margin-bottom: 1rem;"></i>
+                        <h3>Audio Analysis</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">CNN models analyze Mel-spectrograms to detect frequency artifacts in cloned voices.</p>
+                    </div>
+                    <div class="glass-panel" style="padding: 1.5rem; background: rgba(255,255,255,0.02);">
+                        <i class="fa-solid fa-video" style="font-size: 2rem; color: var(--accent-glow); margin-bottom: 1rem;"></i>
+                        <h3>Video Aggregation</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Temporal frame evaluation ensures that manipulation is caught even in split-second segments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 4rem 2rem; border-top: 1px solid var(--panel-border); color: var(--text-secondary); font-size: 0.9rem;">
+        <p>&copy; 2025 DeepfakeGuard Team. Protecting digital trust.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
