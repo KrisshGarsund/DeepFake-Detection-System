@@ -1,4 +1,4 @@
-# 🛡️ VulnurisGuard: Multimodal Deepfake Detection System
+#  VulnurisGuard: Multimodal Deepfake Detection System
 
 ![VulnurisGuard Banner](https://img.shields.io/badge/Status-Hackathon_Ready-success?style=for-the-badge) ![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge) ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-success?style=for-the-badge) ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.10+-orange?style=for-the-badge)
 
@@ -87,4 +87,3 @@ Dataset structure should be mapped via the `scripts/prepare_data.py`. To retrain
 
 ---
 
-Built with ❤️ by the VulnurisGuard Team.
